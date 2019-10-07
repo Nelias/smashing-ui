@@ -20,6 +20,10 @@ export interface TextInputProps {
   value?: any
   disabled?: boolean
   onChange?: React.ChangeEventHandler<HTMLInputElement>
+  onClick?: React.ChangeEventHandler<HTMLInputElement>
+  onFocus?: React.ChangeEventHandler<HTMLInputElement>
+  onBlur?: React.ChangeEventHandler<HTMLInputElement>
+  readOnly?: boolean
 }
 export type StyledTextProps = TextInputProps &
   Required<Pick<TextInputProps, 'height' | 'appearance'>>
