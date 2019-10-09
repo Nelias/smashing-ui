@@ -137,19 +137,6 @@ const colors = {
       topIsResult: '#47B881',
       restIsResult: '#EC4C47'
     }
-  },
-
-  calendar: {
-    border: {
-      default: '#1d304e',
-      muted: '#A2ADC2'
-    },
-    text: {
-      default: '#1D304E',
-      muted: '#A2ADC2'
-    },
-    selected: '#1D304E',
-    hovered: '#7887A0'
   }
 }
 
