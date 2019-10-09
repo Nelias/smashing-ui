@@ -26,6 +26,6 @@
     {"path": "packages/side-sheet"},
     {"path": "packages/toaster"},
     {"path": "packages/charts"},
-    {"path": "packages/calendar"}
+    {"path": "packages/calendar-input"}
   ]
 }
