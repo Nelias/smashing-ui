@@ -5,9 +5,14 @@ defaults: &defaults
   docker:
     - image: circleci/node:11.7.0
 
+orbs:
+  percy: percy/agent@0.1.2
+
 jobs:
   deploy:
-    <<: *defaults
+    working_directory: ~/repo
+    docker:
+      - image: circleci/node:11.7.0
     steps:
       - checkout
       - run:
@@ -44,8 +49,23 @@ jobs:
           name: Add GitHub Deployment error status
           command: ./tasks/deployment/end.sh error
           when: on_fail
+  run_tests:
+    working_directory: ~/repo
+    docker:
+      - image: circleci/node:11.7.0
+    parallelism: 3
+    steps:
+      - attach_workspace:
+          at: .
+      - run: echo "your tests run here"
 
 workflows:
   deploy:
     jobs:
       - deploy
+  test:
+    jobs:
+      - run_tests
+      - percy/finalize_all:
+          requires:
+            - run_tests
