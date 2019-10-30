@@ -7,6 +7,7 @@ defaults: &defaults
 
 orbs:
   percy: percy/agent@0.1.2
+  slack: circleci/slack@0.1.0
 
 jobs:
   deploy:
@@ -23,6 +24,12 @@ jobs:
             - cache-{{ checksum "package.json" }}
             # fallback to using the latest cache if no exact match is found
             - cache-
+      - slack/notify:
+          channel: CHANNELID
+          color: "#42e2f4"
+          mentions: "USERID1,USERID2,"
+          message: This is a custom message notification
+          webhook: webhook
       - run:
           name: Installing Dependencies
           command: yarn
@@ -49,6 +56,11 @@ jobs:
           name: Add GitHub Deployment error status
           command: ./tasks/deployment/end.sh error
           when: on_fail
+      - slack/status:
+          fail_only: true
+          mentions: "USERID1,USERID2"
+          only_for_branches: only_for_branches
+          webhook: webhook
   run_tests:
     working_directory: ~/repo
     docker:
@@ -69,3 +81,8 @@ workflows:
       - percy/finalize_all:
           requires:
             - run_tests
+  your-workflow:
+    jobs:
+      - slack/approval-notification:
+          message: Pending approval
+          webhook: webhook
