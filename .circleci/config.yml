@@ -8,6 +8,7 @@ defaults: &defaults
 orbs:
   percy: percy/agent@0.1.2
   slack: circleci/slack@0.1.0
+  win: circleci/windows@1.0.0
 
 jobs:
   deploy:
@@ -70,11 +71,17 @@ jobs:
       - attach_workspace:
           at: .
       - run: echo "your tests run here"
+  build-windows:
+    executor: win/vs2019
+    steps:
+      - checkout
+      - run: Write-Host 'Hello, Windows'
 
 workflows:
   deploy:
     jobs:
       - deploy
+      - build-windows
   test:
     jobs:
       - run_tests
